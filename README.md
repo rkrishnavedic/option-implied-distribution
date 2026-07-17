@@ -1,13 +1,13 @@
-# Market-Implied Risk-Neutral Distribution Analytics
+# Option-Implied Risk-Neutral Distribution Analytics
 
-A quantitative finance project to recover and analyze market-implied risk-neutral probability distributions from listed option prices.
+A quantitative finance library for recovering, validating, and analyzing option-implied risk-neutral probability distributions from listed option prices.
 
 ## Objectives
 
-- Recover market-implied risk-neutral distributions
-- Build a robust option analytics pipeline
-- Validate results using financial theory and numerical methods
-- Develop production-quality, modular code
+- Recover option-implied risk-neutral probability distributions
+- Develop a robust option analytics pipeline
+- Validate recovered distributions using financial theory and numerical methods
+- Build production-quality, modular quantitative finance software
 
 ## Roadmap
 
@@ -15,8 +15,8 @@ A quantitative finance project to recover and analyze market-implied risk-neutra
 - [ ] Implied volatility solver
 - [ ] Option chain ingestion
 - [ ] Data cleaning
-- [ ] Arbitrage checks
-- [ ] Volatility surface calibration
+- [ ] Static arbitrage checks
+- [ ] Volatility smile & surface calibration
 - [ ] Risk-neutral density recovery
 - [ ] Distribution analytics
 - [ ] Visualization
