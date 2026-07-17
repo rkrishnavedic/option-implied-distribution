@@ -34,3 +34,26 @@ docs/
 ---
 
 🚧 **Status:** Project planning and design.
+
+---
+### Setup Notes
+#### Install dependencies
+`poetry install`
+
+#### View env info
+`poetry env info`
+
+#### Add dependency
+`poetry add numpy`
+
+#### Add dev dependency
+`poetry add --group dev pytest`
+
+#### Open shell
+`poetry shell`
+
+#### Run script
+`poetry run python script.py`
+
+#### Run tests
+`poetry run pytest`
