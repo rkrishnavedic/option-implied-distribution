@@ -4,6 +4,7 @@ from ..models.market import MarketData
 from ..models.option import EuropeanOption, OptionChain
 from ..models.volatility import VolatilityPoint, VolatilitySmile
 from ..pricing.implied_volatility import implied_volatility
+from ..utils.dates import year_fraction
 
 def build_smile(
         option_chain: OptionChain, 
@@ -22,8 +23,7 @@ def build_smile(
     """
     points = []
 
-    expiry = datetime.date.fromisoformat(option_chain.expiry)
-    maturity = (expiry - valuation_date).days / 365.0  # Convert days to years
+    maturity = year_fraction(option_chain.expiry, valuation_date)
 
     for quote in option_chain.quotes:
         option = EuropeanOption(

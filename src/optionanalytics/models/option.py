@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import datetime
+from datetime import datetime, date
 from .enums import OptionType
 
 
@@ -48,12 +48,12 @@ class OptionQuote:
             raise ValueError("Volume cannot be negative.")
         if self.open_interest < 0:
             raise ValueError("Open interest cannot be negative.")
-        if not isinstance(self.last_trade_time, datetime.datetime):
+        if not isinstance(self.last_trade_time, datetime):
             raise ValueError("Last trade time must be a datetime object.")
 
 @dataclass(frozen=True)
 class OptionChain:
     """All listed options for one underlying asset with the same expiration date."""
     underlying: str
-    expiry: str
+    expiry: date
     quotes: list[OptionQuote]

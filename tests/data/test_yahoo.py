@@ -67,5 +67,5 @@ def test_fetch_option_chain():
     chain = fetch_option_chain("AAPL", expiry)
 
     assert chain.underlying == "AAPL"
-    assert chain.expiry == expiry
+    assert str(chain.expiry) == expiry
     assert len(chain.quotes) > 0

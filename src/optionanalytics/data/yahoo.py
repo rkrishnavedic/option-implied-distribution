@@ -1,5 +1,6 @@
 import yfinance as yf
 import pandas as pd
+from datetime import date
 
 from ..models.option import OptionChain
 from ..models.enums import OptionType
@@ -44,6 +45,6 @@ def fetch_option_chain(ticker: str, expiry: str) -> OptionChain:
     
     return OptionChain(
         underlying=ticker,
-        expiry=expiry,
+        expiry=date.fromisoformat(expiry),
         quotes=call_quotes + put_quotes
     )

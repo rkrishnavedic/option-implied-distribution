@@ -15,7 +15,7 @@ def test_build_smile():
         volatility=0.20,
     )
 
-    expiry = '2027-07-18'
+    expiry = datetime.date(2027,7,18)
 
     option = EuropeanOption(
         option_type=OptionType.CALL,
