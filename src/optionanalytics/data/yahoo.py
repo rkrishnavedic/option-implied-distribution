@@ -9,7 +9,7 @@ from ..models.option import OptionQuote
 def _parse_quotes(df: pd.DataFrame, option_type: OptionType) -> list[OptionQuote]:
     """Parses a DataFrame of option quotes into a list of OptionQuote objects."""
     quotes = []
-    for _, row in df.itertuples(index=False):
+    for row in df.itertuples(index=False):
         volume = None if pd.isna(row.volume) else int(row.volume)
         quote = OptionQuote(
             option_type=option_type,
@@ -19,7 +19,7 @@ def _parse_quotes(df: pd.DataFrame, option_type: OptionType) -> list[OptionQuote
             last_price=row.lastPrice,
             volume=volume,
             open_interest=row.openInterest,
-            last_trade_time=pd.to_datetime(row.lastTradeDate),
+            last_trade_time=row.lastTradeDate,
         )
         quotes.append(quote)
     return quotes
@@ -37,13 +37,13 @@ def fetch_option_chain(ticker: str, expiry: str) -> OptionChain:
         OptionChain: An object containing the option chain data.
     """
     ticker_data = yf.Ticker(ticker)
-    row_chain = ticker_data.option_chain(expiry)
+    raw_chain = ticker_data.option_chain(expiry)
     
-    call_quotes = _parse_quotes(row_chain.calls, OptionType.CALL)
-    put_quotes = _parse_quotes(row_chain.puts, OptionType.PUT)
+    call_quotes = _parse_quotes(raw_chain.calls, OptionType.CALL)
+    put_quotes = _parse_quotes(raw_chain.puts, OptionType.PUT)
     
     return OptionChain(
         underlying=ticker,
         expiry=expiry,
-        options=call_quotes + put_quotes
+        quotes=call_quotes + put_quotes
     )

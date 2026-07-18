@@ -56,8 +56,8 @@ class OptionChain:
     """All listed options for one underlying asset with the same expiration date."""
     underlying: str
     expiry: str
-    options: list[OptionQuote]
+    quotes: list[OptionQuote]
 
     def __post_init__(self):
-        if not self.options:
+        if not self.quotes:
             raise ValueError("Option chain cannot be empty.")
