@@ -16,7 +16,8 @@ A quantitative finance library for recovering, validating, and analyzing option-
 - [ ] Option chain ingestion
 - [ ] Data cleaning
 - [ ] Static arbitrage checks
-- [ ] Volatility smile & surface calibration
+- [ ] Implied volatility smile construction (single expiry)
+- [ ] Arbitrage-free volatility surface calibration (multiple expiries)
 - [ ] Risk-neutral density recovery
 - [ ] Distribution analytics
 - [ ] Visualization
