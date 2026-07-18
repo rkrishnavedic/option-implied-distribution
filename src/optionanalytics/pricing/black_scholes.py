@@ -1,5 +1,8 @@
 import numpy as np
 from .normal import normal_cdf
+from ..models.enums import OptionType
+from ..models.option import EuropeanOption
+from ..models.market import MarketData
 
 def _compute_d1(S: float, K: float, T: float, r: float, sigma: float) -> float:
     return (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
@@ -29,11 +32,12 @@ def black_scholes(option: EuropeanOption, market: MarketData) -> float:
     d2 = _compute_d2(d1, sigma, T)
     discount_factor = np.exp(-r * T)
 
-    if option.option_type == OptionType.CALL:
-        price = S * normal_cdf(d1) - K * discount_factor * normal_cdf(d2)
-    elif option.option_type == OptionType.PUT:
-        price = K * discount_factor * normal_cdf(-d2) - S * normal_cdf(-d1)
-    else:
-        raise ValueError("Invalid option type. Must be 'call' or 'put'.")
+    match option.option_type:
+        case OptionType.CALL:
+            price = S * normal_cdf(d1) - K * discount_factor * normal_cdf(d2)
+        case OptionType.PUT:
+            price = K * discount_factor * normal_cdf(-d2) - S * normal_cdf(-d1)
+        case _:
+            raise ValueError("Invalid option type. Must be 'call' or 'put'.")
 
     return price
