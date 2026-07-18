@@ -58,3 +58,6 @@ docs/
 
 #### Run tests
 `poetry run pytest`
+
+#### Adding dev dependencies
+`poetry add --group dev jupyterlab ipykernel`
