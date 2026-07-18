@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from .enums import OptionType
 
 
 @dataclass(frozen=True)
 class VolatilityPoint:
     strike: float
     implied_volatility: float
+    option_type: OptionType
 
 
 @dataclass(frozen=True)

@@ -36,6 +36,6 @@ def build_smile(
             option=option,
             market_data=market_data
         )
-        points.append(VolatilityPoint(strike=quote.strike, implied_volatility=implied_vol))
+        points.append(VolatilityPoint(strike=quote.strike, implied_volatility=implied_vol, option_type=quote.option_type))
 
     return VolatilitySmile(underlying=option_chain.underlying, expiry=option_chain.expiry, points=points)
