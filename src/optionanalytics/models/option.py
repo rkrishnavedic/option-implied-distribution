@@ -57,7 +57,3 @@ class OptionChain:
     underlying: str
     expiry: str
     quotes: list[OptionQuote]
-
-    def __post_init__(self):
-        if not self.quotes:
-            raise ValueError("Option chain cannot be empty.")
