@@ -1,3 +1,4 @@
+![Build](https://github.com/rkrishnavedic/option-implied-distribution/actions/workflows/tests.yml/badge.svg)
 # Option-Implied Risk-Neutral Distribution Analytics
 
 A quantitative finance library for recovering, validating, and analyzing option-implied risk-neutral probability distributions from listed option prices.
