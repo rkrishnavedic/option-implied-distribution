@@ -14,3 +14,8 @@ class VolatilitySmile:
     underlying: str
     expiry: str
     points: list[VolatilityPoint]
+
+@dataclass(frozen=True)
+class VolatilitySurface:
+    underlying: str
+    smiles: list[VolatilitySmile]
