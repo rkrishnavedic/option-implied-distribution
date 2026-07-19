@@ -19,3 +19,10 @@ class VolatilitySmile:
 class VolatilitySurface:
     underlying: str
     smiles: list[VolatilitySmile]
+
+    def __post_init__(self):
+        if not self.smiles:
+            raise ValueError("Volatility surface cannot be empty.")
+
+        if any(smile.underlying != self.underlying for smile in self.smiles):
+            raise ValueError("All smiles must belong to the same underlying.")
