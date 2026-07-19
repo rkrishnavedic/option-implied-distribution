@@ -14,6 +14,7 @@ from datetime import date
 import numpy as np
 from collections.abc import Callable
 
+from ..volatility.svi import build_svi
 from ..volatility.interpolation import interpolate_smile
 from ..utils.dates import year_fraction
 from ..pricing.black_scholes import black_scholes
@@ -21,7 +22,7 @@ from ..pricing.black_scholes import black_scholes
 from ..models.density import Density, DensityPoint
 from ..models.volatility import VolatilitySmile
 from ..models.market import MarketData
-from ..models.enums import InterpolationMethod, OptionType
+from ..models.enums import InterpolationMethod, OptionType, VolatilityModel
 from ..pricing.black_scholes import EuropeanOption
 
 NUMBER_OF_DATA_POINTS=300
@@ -59,6 +60,7 @@ def build_density(
         market_data: MarketData,
         valuation_date: date,
         interpolation_method: InterpolationMethod = InterpolationMethod.PCHIP,
+        volatility_model: VolatilityModel | None = None,
         number_of_data_points: int = NUMBER_OF_DATA_POINTS
     ) -> Density:
 
@@ -67,10 +69,19 @@ def build_density(
         valuation_date=valuation_date,
     )
 
-    iv_function = interpolate_smile(
-        smile,
-        interpolation_method,
-    )
+    if volatility_model is None:
+        iv_function = interpolate_smile(
+            smile,
+            interpolation_method,
+        )
+    elif volatility_model == VolatilityModel.SVI:
+        iv_function = build_svi(
+            smile,
+            market_data,
+            maturity
+        )
+    else:
+        raise ValueError(f"Unsupported volatility model: {volatility_model}")
 
     strikes = [p.strike for p in smile.points]
 

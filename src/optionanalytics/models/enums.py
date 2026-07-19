@@ -9,3 +9,6 @@ class InterpolationMethod(StrEnum):
     CUBIC_SPLINE = "cubic_spline"
     PCHIP = "pchip"
     AKIMA = "akima"
+
+class VolatilityModel(StrEnum):
+    SVI = "svi"
