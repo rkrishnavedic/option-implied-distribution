@@ -4,7 +4,7 @@
 
 A quantitative finance library for constructing implied volatility smiles, calibrating parametric volatility models, recovering option-implied risk-neutral probability distributions, and validating numerical methods used in option analytics.
 
-![AAPL SVI vs Interpolation Stability](asset/aapl_svi_vs_interpolation.png)
+![AAPL SVI vs Interpolation Stability](assets/aapl_svi_vs_interpolation.png)
 
 ---
 
