@@ -2,7 +2,11 @@
 
 # Option-Implied Risk-Neutral Distribution Analytics
 
-A quantitative finance library for constructing implied volatility smiles and surfaces, recovering risk-neutral probability distributions from option prices, and validating numerical methods used in option analytics.
+A quantitative finance library for constructing implied volatility smiles, calibrating parametric volatility models, recovering option-implied risk-neutral probability distributions, and validating numerical methods used in option analytics.
+
+![AAPL SVI vs Interpolation Stability](asset/aapl_svi_vs_interpolation.png)
+
+---
 
 ## Features
 
@@ -12,29 +16,67 @@ A quantitative finance library for constructing implied volatility smiles and su
 - Option quote cleaning and validation
 - Static arbitrage checks
 - Implied volatility smile construction
-- Volatility surface construction
 - Multiple smile interpolation methods
   - PCHIP
   - Akima
   - Cubic Spline
+- SVI volatility smile calibration
 - Breeden–Litzenberger risk-neutral density extraction
 - Numerical validation notebooks
 - Comprehensive unit test suite
 
+---
+
+## Pipeline
+
+```text
+Yahoo Finance
+      │
+      ▼
+ Option Chain
+      │
+      ▼
+ Cleaning & Validation
+      │
+      ▼
+ Implied Volatility
+      │
+      ▼
+ Volatility Smile
+      │
+ ┌────┴──────────┐
+ ▼               ▼
+Interpolation | SVI
+      │
+      ▼
+Black-Scholes Pricing
+      │
+      ▼
+Breeden–Litzenberger
+      │
+      ▼
+Risk-Neutral Density
+```
+
+---
+
 ## Numerical Validation
 
-The density extraction implementation has been validated under a constant-volatility Black-Scholes model.
+The Breeden–Litzenberger implementation has been validated using a controlled constant-volatility Black–Scholes benchmark.
 
-A controlled experiment showed that:
+Key findings:
 
-- Constant volatility recovers a smooth density with total probability ≈ **1.000000**
-- Generic smile interpolation (PCHIP, Akima and Cubic Spline) produces unstable second derivatives, leading to densities whose total probability exceeds one
+- Constant volatility recovers a smooth risk-neutral density with total probability ≈ **1.000000**
+- Generic smile interpolation (PCHIP, Akima and Cubic Spline) accurately reproduces market implied volatilities but produces unstable second derivatives when numerically differentiated
+- The resulting recovered densities exhibit probability mass greater than one, demonstrating that the limitation lies in the smoothness of the volatility representation rather than the Breeden–Litzenberger implementation itself
 
-This demonstrates that the numerical differentiation pipeline is correct, while highlighting the need for arbitrage-aware volatility parameterizations for stable density recovery.
+These experiments establish the correctness of the numerical differentiation pipeline while motivating the use of arbitrage-aware parametric volatility models such as **SVI** for stable density recovery.
+
+---
 
 ## Roadmap
 
-### Phase 1 — Prototype ✅
+### Phase 1 — Prototype
 
 - [x] Black-Scholes pricing
 - [x] Implied volatility solver
@@ -42,37 +84,51 @@ This demonstrates that the numerical differentiation pipeline is correct, while 
 - [x] Data cleaning
 - [x] Static arbitrage validation
 - [x] Implied volatility smile construction
-- [x] Volatility surface construction
 - [x] Smile interpolation
+- [x] SVI volatility smile calibration
 - [x] Breeden–Litzenberger density extraction
 - [x] Numerical validation
 
 ### Phase 2 — Research
 
-- [ ] SVI volatility smile calibration
+- [x] SVI case study
+- [x] Stable market-implied density recovery using calibrated SVI
+
+Future Plan:
 - [ ] Arbitrage-free volatility surface
-- [ ] Stable risk-neutral density extraction
 - [ ] Distribution analytics
 - [ ] Density moments (mean, variance, skewness, kurtosis)
 - [ ] Local volatility extraction
 - [ ] Interactive visualizations
 - [ ] Documentation website
 
+---
+
 ## Repository Structure
 
 ```text
 src/
+├── cleaning/
+├── data/
+├── density/
+├── models/
+├── pricing/
+├── volatility/
+└── utils/
+
 tests/
 notebooks/
-docs/
 ```
+
+---
 
 ## Current Status
 
 **Version:** Prototype Complete (v1)
 
 The core option analytics pipeline has been implemented and validated.
-Current research focuses on replacing generic smile interpolation with arbitrage-aware parameterizations (SVI) for stable market-implied density recovery.
+
+Current research focuses on evaluating **SVI** as an arbitrage-aware volatility parameterization for improving the numerical stability of Breeden–Litzenberger risk-neutral density recovery.
 
 ---
 

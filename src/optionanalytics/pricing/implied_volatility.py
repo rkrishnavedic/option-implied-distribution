@@ -5,7 +5,7 @@ from ..models.option import EuropeanOption
 from .black_scholes import black_scholes
 
 MIN_VOLATILITY = 1e-6
-MAX_VOLATILITY = 5.0
+MAX_VOLATILITY = 10.0
 
 def _objective_function(sigma: float, price: float, option: EuropeanOption, market_data: MarketData) -> float:
     trial_market_data = MarketData(spot=market_data.spot,
@@ -24,7 +24,7 @@ def implied_volatility(price: float, option: EuropeanOption, market_data: Market
     option (EuropeanOption): The European option for which to calculate implied volatility.
     market_data (MarketData): The market data including spot price and risk-free rate.
         Market Inputs. The volatility field is ignored during the inversion.
-        
+
     tolerance (float): Tolerance for convergence.
     max_iterations (int): Maximum number of iterations.
 
